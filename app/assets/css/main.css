@@ -1,0 +1,53 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+@theme {
+  --font-sans: "Be Vietnam Pro", sans-serif;
+
+  --color-blue-light: #e6f0ff;
+  --color-blue-light-hover: #d9e8ff;
+  --color-blue-light-active: #b0cfff;
+  --color-blue-normal: #0065ff;
+  --color-blue-normal-hover: #005be6;
+  --color-blue-normal-active: #0051cc;
+  --color-blue-dark: #004cbf;
+  --color-blue-dark-hover: #003d99;
+  --color-blue-dark-active: #002d73;
+  --color-blue-darker: #002359;
+
+  --color-yellow-light: #fbfdf0;
+  --color-yellow-light-hover: #f9fce8;
+  --color-yellow-light-active: #f2f9d0;
+  --color-yellow-normal: #d6eb67;
+  --color-yellow-normal-hover: #c1d45d;
+  --color-yellow-normal-active: #abbc52;
+  --color-yellow-dark: #a1b04d;
+  --color-yellow-dark-hover: #808d3e;
+  --color-yellow-dark-active: #606a2e;
+  --color-yellow-darker: #4b5224;
+
+}
+
+:root {
+  --ui-primary: var(--color-blue-normal);
+  --ui-radius: 0.35rem;
+
+  /* --ui-secondary: var(--ui-color-secondary-500);
+  --ui-success: var(--ui-color-success-500);
+  --ui-info: var(--ui-color-info-500);
+  --ui-warning: var(--ui-color-warning-500);
+  --ui-error: var(--ui-color-error-500); */
+
+}
+
+@layer base {
+
+  .hide-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
