@@ -36,7 +36,7 @@
         size="xl"
         placeholder="Explore portfolio here..."
         icon="lucide-search"
-        class="w-[500px] mb-8 drop-shadow-lg mt-4"
+        class="w-[300px] lg:w-[500px] mb-8 drop-shadow-lg mt-4"
       />
       <p class="text-neutral-500 max-w-md text-center">
         Start building your portfolio today! Manage your projects, skills, and
