@@ -153,7 +153,6 @@
 <script setup lang="ts">
 import { USeparator } from "#components";
 
-const sideBarStatus = ref("extend");
 type SidebarItem = {
   label: string;
   icon: string;
@@ -162,12 +161,13 @@ type SidebarItem = {
 defineProps<{
   navigationLinks?: SidebarItem[];
 }>();
+const sideBarStatus = ref("extend");
 
 const mainItems = ref<SidebarItem[]>([
   {
     label: "Workspace",
     icon: "i-lucide-home",
-    to: "/workspace",
+    to: "/",
   },
 ]);
 
@@ -175,22 +175,22 @@ const recentItems = ref<SidebarItem[]>([
   {
     label: "Project 1",
     icon: "i-lucide-folder",
-    to: "/projects/1",
+    to: "/",
   },
   {
     label: "Project 2",
     icon: "i-lucide-folder",
-    to: "/projects/2",
+    to: "/",
   },
   {
     label: "Project 3",
     icon: "i-lucide-folder",
-    to: "/projects/3",
+    to: "/",
   },
 ]);
 
 const toggleSidebar = () => {
   sideBarStatus.value = sideBarStatus.value === "mini" ? "extend" : "mini";
 };
-const {logout} = useAuthStore()
+const { logout } = useAuthStore();
 </script>

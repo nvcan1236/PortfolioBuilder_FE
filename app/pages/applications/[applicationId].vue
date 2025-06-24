@@ -1,0 +1,1 @@
+<template>Application Detail</template>

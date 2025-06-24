@@ -20,7 +20,7 @@ useHead({
     {
       rel: "icon",
       type: "image/png",
-      href: "/spm.png",
+      href: "/logo_nobg.png",
     },
   ],
 });
