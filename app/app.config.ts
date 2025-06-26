@@ -7,7 +7,7 @@ export default defineAppConfig({
     },
     button: {
       slots: {
-        base: "px-5 py-2.5 h-10 ",
+        base: "py-2.5 min-h-10 px-6",
         // label: '!text-[13px] leading-[100%]'
       },
       compoundVariants: [
@@ -28,6 +28,7 @@ export default defineAppConfig({
     modal: {
       slots: {
         overlay: "bg-black/30",
+        content: "p-4",
       },
     },
   },

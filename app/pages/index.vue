@@ -1,4 +1,7 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const authStore = useAuthStore();
+const { isAuthenticated } = storeToRefs(authStore);
+</script>
 
 <template>
   <div
@@ -37,14 +40,21 @@
         placeholder="Explore portfolio here..."
         icon="lucide-search"
         class="w-[300px] lg:w-[500px] mb-8 drop-shadow-lg mt-4"
+        :ui="{
+          leading: 'ml-4',
+          base: 'pl-20',
+        }"
       />
       <p class="text-neutral-500 max-w-md text-center">
         Start building your portfolio today! Manage your projects, skills, and
         experience all in one place.
       </p>
       <div class="flex space-x-4 mt-6">
-        <!-- <UButton label="Get Started" color="primary" to="/build" /> -->
-        <AuthModal label="Start building your portfolio" class="px-4" />
+        <div v-if="isAuthenticated" class="flex space-x-4">
+          <UButton label="Your Portfolio" color="primary" to="/build" icon="lucide:notebook-pen" class="px-4" />
+          <LogoutModal />
+        </div>
+        <AuthModal v-else label="Start building your portfolio" class="px-4" />
       </div>
     </div>
   </div>
