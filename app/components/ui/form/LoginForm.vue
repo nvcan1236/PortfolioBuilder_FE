@@ -1,10 +1,5 @@
 <template>
-  <UForm
-    :schema="schema"
-    :state="state"
-    class="space-y-4"
-    @submit="handleLogin"
-  >
+  <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
     <UFormField label="Email" name="email">
       <UInput v-model="state.email" class="w-full" />
     </UFormField>
@@ -27,22 +22,17 @@
       </div>
     </UFormField>
 
-    <div class="text-left">
-      <UButton
-        variant="link"
-        color="neutral"
-        @click="setAuthType('forgot-password')"
-      >
-        Forgot password?
-      </UButton>
-    </div>
-    <UButton type="submit" class="w-full justify-center"> Submit </UButton>
+    <div class="text-left"></div>
+    <UButton type="submit" class="w-full justify-center" :loading="isPending">
+      Submit
+    </UButton>
   </UForm>
 </template>
 
 <script setup lang="ts">
 import * as z from "zod";
 import type { FormSubmitEvent } from "@nuxt/ui";
+import { useLoginMutation } from "~/api/mutations/auth";
 
 const schema = z.object({
   email: z.string().email("Invalid email"),
@@ -53,23 +43,31 @@ type Schema = z.output<typeof schema>;
 const showPassword = ref(false);
 
 const state = reactive<Partial<Schema>>({
-  email: "someone@email.com",
-  password: "somepassword",
+  email: "string1@gmail.com",
+  password: "string1",
 });
 
 const toast = useToast();
-const { login, setAuthType } = useAuthStore();
-async function onSubmit(event: FormSubmitEvent<Schema>) {
-  toast.add({
-    title: "Success",
-    description: "The form has been submitted.",
-    color: "success",
-  });
-  console.log(event.data);
-}
+const { loginDone, setAuthType } = useAuthStore();
+const { mutateAsync: loginMutation, isPending } = useLoginMutation();
 
-const handleLogin = () => {
-  login("", "");
-  navigateTo("/");
-};
+async function onSubmit(event: FormSubmitEvent<Schema>) {
+  try {
+    const { data } = await loginMutation(event.data);
+    loginDone();
+    saveToken(data.accessToken, data.refreshToken);
+    setAuthType("login");
+    toast.add({
+      title: "Success",
+      description: "Login successful.",
+      color: "success",
+    });
+  } catch (error) {
+    toast.add({
+      title: "Error",
+      description: "Login failed.",
+      color: "error",
+    });
+  }
+}
 </script>

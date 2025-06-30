@@ -29,20 +29,28 @@
         <LoginForm v-if="authType === 'login'" />
         <RegisterForm v-if="authType === 'register'" />
         <ForgotPasswordForm v-if="authType === 'forgot-password'" />
+      </div>
+    </template>
 
-        <div class="flex justify-center mt-4">
+    <template #footer>
+      <div class="flex justify-center w-full">
+        <UButton
+          variant="link"
+          @click="setAuthType('login')"
+          v-if="authType === 'register' || authType === 'forgot-password'"
+        >
+          Already have an account? Login
+        </UButton>
+        <div v-if="authType === 'login'" class="flex flex-col items-center">
           <UButton
             variant="link"
-            @click="setAuthType('login')"
-            v-if="authType === 'register' || authType === 'forgot-password'"
+            color="neutral"
+            class="min-h-0"
+            @click="setAuthType('forgot-password')"
           >
-            Already have an account? Login
+            Forgot password?
           </UButton>
-          <UButton
-            variant="link"
-            @click="setAuthType('register')"
-            v-if="authType === 'login'"
-          >
+          <UButton variant="link" @click="setAuthType('register')">
             Don't have an account? Register
           </UButton>
         </div>

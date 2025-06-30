@@ -1,8 +1,10 @@
 <template>
   <UApp>
     <NuxtLayout default-layout="default">
-      <NuxtLoadingIndicator />
-      <NuxtPage />
+      <AuthProvider>
+        <NuxtLoadingIndicator />
+        <NuxtPage />
+      </AuthProvider>
     </NuxtLayout>
   </UApp>
 </template>

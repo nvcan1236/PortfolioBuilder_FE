@@ -1,12 +1,6 @@
 <template>
   <UModal>
-    <UButton
-      label="Logout"
-      color="neutral"
-      variant="subtle"
-      icon="lucide:log-out"
-      class="px-4"
-    />
+    <UButton color="error" variant="ghost" icon="lucide:log-out" class="px-4" />
     <template #title>
       <h2 class="text-lg font-semibold">Logout</h2>
     </template>
@@ -18,7 +12,7 @@
         label="Logout"
         color="error"
         variant="subtle"
-        @click="logout"
+        @click="handleLogout"
         icon="lucide:log-out"
         class="px-4 ml-auto"
       />
@@ -27,5 +21,18 @@
 </template>
 
 <script setup lang="ts">
-const { logout } = useAuthStore();
+import { useLogoutMutation } from "~/api/mutations/auth";
+
+const { logoutDone } = useAuthStore();
+const { mutateAsync: logout } = useLogoutMutation();
+
+const handleLogout = async () => {
+  try {
+    await logout();
+    logoutDone();
+    navigateTo("/");
+  } catch (error) {
+    console.log(error);
+  }
+};
 </script>

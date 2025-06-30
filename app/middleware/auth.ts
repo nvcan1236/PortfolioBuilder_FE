@@ -1,10 +1,15 @@
-import { useAuthStore } from "~/stores/useAuth"
+import { useAuthStore } from "~/stores/useAuth";
 
 export default defineNuxtRouteMiddleware((to, from) => {
-  const { isAuthenticated } = useAuthStore()
+  const authStore = useAuthStore();
+  const toast = useToast();
 
-  if (!isAuthenticated) {
-    // Redirect to login page if not authenticated
-    return navigateTo('/login')
+  if (!authStore.isAuthenticated) {
+    toast.add({
+      title: "Error",
+      description: "You are not authenticated.",
+      color: "error",
+    });
+    return navigateTo("/");
   }
-})
+});

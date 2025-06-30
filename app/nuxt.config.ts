@@ -1,12 +1,19 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import tailwindcss from "@tailwindcss/vite";
 
+// Runtime configuration for API and other settings
 export default defineNuxtConfig({
+  runtimeConfig: {
+    public: {
+      apiBase: process.env.NUXT_API_BASE_URL,
+      appEnv: process.env.NODE_ENV,
+    },
+  },
   compatibilityDate: "2024-11-01",
   devtools: { enabled: true },
   routeRules: {
-    "/projects/**": { appMiddleware: ["auth"] },
-    "/tasks/**": { appMiddleware: ["auth"] },
+    "/build": { appMiddleware: ["auth"] },
+    "/applications/**": { appMiddleware: ["auth"] },
   },
   modules: ["@nuxt/ui", "@pinia/nuxt", "@nuxt/image"],
   css: ["~/assets/css/main.css"],
@@ -17,15 +24,6 @@ export default defineNuxtConfig({
     prefix: "U",
     theme: {
       transitions: false,
-      colors: [
-        "primary",
-        "secondary",
-        "tertiary",
-        "info",
-        "success",
-        "warning",
-        "error",
-      ],
     },
   },
   pinia: {

@@ -1,7 +1,4 @@
-import { set } from "@nuxt/ui/runtime/utils/index.js";
-
 type AuthType = "login" | "register" | "forgot-password";
-
 
 export const useAuthStore = defineStore("auth", {
   state: () => ({
@@ -11,15 +8,17 @@ export const useAuthStore = defineStore("auth", {
     authType: "login" as AuthType,
   }),
   actions: {
-    async login(email: string, password: string) {
+    async loginDone() {
       this.isAuthenticated = true;
     },
-    async logout() {
+    async logoutDone() {
       this.isAuthenticated = false;
+      localStorage.removeItem(LOCAL_STORAGE_ITEM.ACCESS_TOKEN);
+      localStorage.removeItem(LOCAL_STORAGE_ITEM.REFRESH_TOKEN);
     },
 
     setAuthType(type: AuthType) {
       this.authType = type;
-    }
+    },
   },
 });

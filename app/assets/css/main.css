@@ -25,7 +25,6 @@
   --color-yellow-dark-hover: #808d3e;
   --color-yellow-dark-active: #606a2e;
   --color-yellow-darker: #4b5224;
-
 }
 
 :root {
@@ -33,14 +32,16 @@
   --ui-radius: 0.5rem;
 
   /* --ui-secondary: #49BA61; */
-  --ui-success: #49BA61;
-  --ui-info: #3582FF;
-  --ui-warning: #FFB73A;
-  --ui-error: #FE5938;
-
+  --ui-success: #49ba61;
+  --ui-info: #3582ff;
+  --ui-warning: #ffb73a;
+  --ui-error: #fe5938;
 }
 
 @layer base {
+  .tool-bar {
+    @apply min-w-[360px] left-1/2 -translate-x-1/2 flex items-center justify-center gap-2 p-2 rounded-lg border border-[#ECECEC] bg-[#FCFCFC] shadow-[0_8px_16px_-12px_#00000020,0_1px_4px_-4px_#00000013];
+  }
 
   .hide-scrollbar {
     scrollbar-width: none;

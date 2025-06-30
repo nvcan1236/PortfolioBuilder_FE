@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia';
 const authStore = useAuthStore();
 const { isAuthenticated } = storeToRefs(authStore);
 </script>
@@ -39,22 +40,68 @@ const { isAuthenticated } = storeToRefs(authStore);
         size="xl"
         placeholder="Explore portfolio here..."
         icon="lucide-search"
-        class="w-[300px] lg:w-[500px] mb-8 drop-shadow-lg mt-4"
+        class="w-[360px] lg:w-[500px] mb-8 drop-shadow-lg mt-4"
         :ui="{
           leading: 'ml-4',
           base: 'pl-20',
         }"
       />
-      <p class="text-neutral-500 max-w-md text-center">
+      <p class="text-neutral-500 max-w-xl text-center px-6">
         Start building your portfolio today! Manage your projects, skills, and
         experience all in one place.
       </p>
-      <div class="flex space-x-4 mt-6">
-        <div v-if="isAuthenticated" class="flex space-x-4">
-          <UButton label="Your Portfolio" color="primary" to="/build" icon="lucide:notebook-pen" class="px-4" />
-          <LogoutModal />
+      <div class="flex space-x-4 mt-12">
+        <div v-if="isAuthenticated" class="fixed bottom-8 tool-bar">
+          <UButton
+            label="Your Portfolio"
+            variant="ghost"
+            color="neutral"
+            to="/p/canh"
+            icon="lucide:notebook-pen"
+            class="px-4 gap-2"
+            :ui="{
+              label: 'hidden lg:block',
+            }"
+          />
+          <UButton
+            label="Manage Jobs"
+            variant="ghost"
+            to="/applications"
+            color="neutral"
+            icon="lucide:briefcase"
+            class="px-4 gap-2"
+            :ui="{
+              label: 'hidden lg:block',
+            }"
+          />
+          <UButton
+            label="Evaluate Jobs"
+            variant="ghost"
+            to="/evaluate"
+            color="neutral"
+            icon="lucide:sparkles"
+            class="px-4 gap-2"
+            :ui="{
+              label: 'hidden lg:block',
+            }"
+          />
+          <div class="flex items-center">
+            <UButton
+              variant="link"
+              color="neutral"
+              class="font-semibold gap-2"
+              icon="lucide:user-round"
+              :ui="{
+                label: 'hidden lg:block',
+              }"
+            >
+              Canh Nguyen
+            </UButton>
+            <LogoutModal />
+          </div>
         </div>
-        <AuthModal v-else label="Start building your portfolio" class="px-4" />
+
+        <AuthModal label="Start building your portfolio" class="px-4" v-else />
       </div>
     </div>
   </div>

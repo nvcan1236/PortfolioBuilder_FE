@@ -25,19 +25,16 @@ import type { FormSubmitEvent } from "@nuxt/ui";
 
 const schema = z.object({
   email: z.string().email("Invalid email"),
-  password: z.string().min(8, "Must be at least 8 characters"),
 });
 
 type Schema = z.output<typeof schema>;
-const showPassword = ref(false);
 
 const state = reactive<Partial<Schema>>({
   email: "someone@email.com",
-  password: "somepassword",
 });
 
 const toast = useToast();
-const { login } = useAuthStore();
+const { loginDone } = useAuthStore();
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   toast.add({
     title: "Success",
@@ -48,7 +45,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 }
 
 const handleLogin = () => {
-  login("", "");
+  loginDone();
   navigateTo("/");
 };
 </script>
