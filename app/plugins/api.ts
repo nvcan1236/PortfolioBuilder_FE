@@ -20,75 +20,75 @@ export default defineNuxtPlugin((nuxtApp) => {
     (error) => Promise.reject(error)
   );
 
-  api.interceptors.request.use((config) => {
-    const token = localStorage.getItem(LOCAL_STORAGE_ITEM.ACCESS_TOKEN);
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  });
+  // api.interceptors.request.use((config) => {
+  //   const token = localStorage.getItem(LOCAL_STORAGE_ITEM.ACCESS_TOKEN);
+  //   if (token) {
+  //     config.headers.Authorization = `Bearer ${token}`;
+  //   }
+  //   return config;
+  // });
 
-  let isRefreshing = false;
-  let failedQueue: (() => void)[] = [];
+  // let isRefreshing = false;
+  // let failedQueue: (() => void)[] = [];
 
-  const processQueue = () => {
-    failedQueue.forEach((cb) => cb());
-    failedQueue = [];
-  };
+  // const processQueue = () => {
+  //   failedQueue.forEach((cb) => cb());
+  //   failedQueue = [];
+  // };
 
-  api.interceptors.response.use(
-    (res) => res,
-    async (err) => {
-      const originalRequest = err.config;
+  // api.interceptors.response.use(
+  //   (res) => res,
+  //   async (err) => {
+  //     const originalRequest = err.config;
 
-      if (err.response?.status === 401 && !originalRequest._retry) {
-        originalRequest._retry = true;
+  //     if (err.response?.status === 401 && !originalRequest._retry) {
+  //       originalRequest._retry = true;
 
-        if (!isRefreshing) {
-          isRefreshing = true;
+  //       if (!isRefreshing) {
+  //         isRefreshing = true;
 
-          try {
-            const refreshToken = localStorage.getItem(
-              LOCAL_STORAGE_ITEM.REFRESH_TOKEN
-            );
-            if (!refreshToken) throw new Error("No refresh token");
+  //         try {
+  //           const refreshToken = localStorage.getItem(
+  //             LOCAL_STORAGE_ITEM.REFRESH_TOKEN
+  //           );
+  //           if (!refreshToken) throw new Error("No refresh token");
 
-            const response = await api.post("/auth/refresh-token", {
-              refreshToken,
-            });
+  //           const response = await api.post("/auth/refresh-token", {
+  //             refreshToken,
+  //           });
 
-            const newAccessToken = response.data.accessToken;
-            localStorage.setItem(
-              LOCAL_STORAGE_ITEM.ACCESS_TOKEN,
-              newAccessToken
-            );
-            localStorage.setItem(
-              LOCAL_STORAGE_ITEM.REFRESH_TOKEN,
-              response.data.refreshToken
-            );
+  //           const newAccessToken = response.data.accessToken;
+  //           localStorage.setItem(
+  //             LOCAL_STORAGE_ITEM.ACCESS_TOKEN,
+  //             newAccessToken
+  //           );
+  //           localStorage.setItem(
+  //             LOCAL_STORAGE_ITEM.REFRESH_TOKEN,
+  //             response.data.refreshToken
+  //           );
 
-            isRefreshing = false;
-            processQueue();
+  //           isRefreshing = false;
+  //           processQueue();
 
-            originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-            return api(originalRequest);
-          } catch (refreshErr) {
-            isRefreshing = false;
-            failedQueue = [];
-            localStorage.removeItem(LOCAL_STORAGE_ITEM.ACCESS_TOKEN);
-            localStorage.removeItem(LOCAL_STORAGE_ITEM.REFRESH_TOKEN);
-            return Promise.reject(refreshErr);
-          }
-        }
+  //           originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+  //           return api(originalRequest);
+  //         } catch (refreshErr) {
+  //           isRefreshing = false;
+  //           failedQueue = [];
+  //           localStorage.removeItem(LOCAL_STORAGE_ITEM.ACCESS_TOKEN);
+  //           localStorage.removeItem(LOCAL_STORAGE_ITEM.REFRESH_TOKEN);
+  //           return Promise.reject(refreshErr);
+  //         }
+  //       }
 
-        return new Promise((resolve) => {
-          failedQueue.push(() => resolve(api(originalRequest)));
-        });
-      }
+  //       return new Promise((resolve) => {
+  //         failedQueue.push(() => resolve(api(originalRequest)));
+  //       });
+  //     }
 
-      return Promise.reject(err);
-    }
-  );
+  //     return Promise.reject(err);
+  //   }
+  // );
 
   nuxtApp.provide("api", api);
 });

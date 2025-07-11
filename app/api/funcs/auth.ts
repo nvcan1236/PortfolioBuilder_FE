@@ -6,11 +6,11 @@ export const useAuthApiFunction = () => {
   const { $api } = useNuxtApp();
   const api = $api as AxiosInstance;
 
-  const login = (
-    email: string,
-    password: string
-  ): Promise<Response<{ accessToken: string; refreshToken: string }>> => {
-    return api.post(`/auth/login`, { email, password }).then((res) => res.data);
+  const login = (data: {
+    email: string;
+    password: string;
+  }): Promise<Response<{ accessToken: string; refreshToken: string }>> => {
+    return api.post(`/auth/login`, data).then((res) => res.data);
   };
 
   const register = (
@@ -35,6 +35,26 @@ export const useAuthApiFunction = () => {
     return api.post(`/auth/refresh-token`).then((res) => res.data);
   };
 
+  const verifyEmail = (data: { email: string }) => {
+    return api.post(`/auth/verify-email`, data).then((res) => res.data);
+  };
+
+  const resetPassword = (data: {
+    email: string;
+    code: string;
+    newPassword: string;
+  }) => {
+    return api.post(`/auth/reset-password`, data).then((res) => res.data);
+  };
+
+  const forgotPassword = (data: { email: string }) => {
+    return api.post(`/auth/forgot-password`, data).then((res) => res.data);
+  };
+
+  const confirmEmail = (data: { email: string; code: string }) => {
+    return api.post(`/auth/confirm-email`, data).then((res) => res.data);
+  };
+
   return {
     getUserById,
     login,
@@ -42,5 +62,9 @@ export const useAuthApiFunction = () => {
     getMe,
     logout,
     refreshToken,
+    verifyEmail,
+    resetPassword,
+    forgotPassword,
+    confirmEmail,
   };
 };

@@ -1,21 +1,31 @@
 import { useMutation } from "@tanstack/vue-query";
 import type { RegisterUser } from "~/types/auth";
 import { useAuthApiFunction } from "~/api/funcs/auth";
+import { useQueryClient } from "@tanstack/vue-query";
 
 export const useLoginMutation = () => {
   const { login } = useAuthApiFunction();
+  const client = useQueryClient();
   return useMutation({
-    mutationFn: (data: { email: string; password: string }) =>
-      login(data.email, data.password),
-    onSuccess: (data) => {},
+    mutationFn: login,
+    onSuccess: (data) => {
+      client.invalidateQueries({
+        queryKey: ["me"],
+      });
+    },
   });
 };
 
 export const useRegisterMutation = () => {
   const { register } = useAuthApiFunction();
+  const client = useQueryClient();
   return useMutation({
-    mutationFn: (data: RegisterUser) => register(data),
-    onSuccess: (data) => {},
+    mutationFn: register,
+    onSuccess: (data) => {
+      client.invalidateQueries({
+        queryKey: ["me"],
+      });
+    },
   });
 };
 
@@ -23,18 +33,42 @@ export const useRegisterMutation = () => {
 export const useLogoutMutation = () => {
   const { logout } = useAuthApiFunction();
   return useMutation({
-    mutationFn: () => logout(),
-    onSuccess: (data) => {},
+    mutationFn: logout,
   });
 };
 
 export const useRefreshTokenMutation = () => {
   const { refreshToken } = useAuthApiFunction();
   return useMutation({
-    mutationFn: () => refreshToken(),
-    onSuccess: (data) => {},
+    mutationFn: refreshToken,
+  });
+};
+
+export const useVerifyEmailMutation = () => {
+  const { verifyEmail } = useAuthApiFunction();
+  return useMutation({
+    mutationFn: verifyEmail,
+  });
+};
+
+export const useConfirmEmailMutation = () => {
+  const { confirmEmail } = useAuthApiFunction();
+  return useMutation({
+    mutationFn: confirmEmail,
+  });
+};
+
+export const useForgotPasswordMutation = () => {
+  const { forgotPassword } = useAuthApiFunction();
+  return useMutation({
+    mutationFn: forgotPassword,
   });
 };
 
 
-
+export const useResetPasswordMutation = () => {
+  const { resetPassword } = useAuthApiFunction();
+  return useMutation({
+    mutationFn: resetPassword,
+  });
+};
