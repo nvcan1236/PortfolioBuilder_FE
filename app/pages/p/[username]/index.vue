@@ -33,10 +33,11 @@
 
 <script setup lang="ts">
 import type { TemplateKey } from "~/components/templates/templatesConfig";
-const value = ref<TemplateKey>("minimal");
+const value = ref<TemplateKey>("default");
 const items: { value: TemplateKey; label: string }[] = [
   { value: "modern", label: "Modern" },
   { value: "classic", label: "Classic" },
   { value: "minimal", label: "Minimal" },
+  { value: "default", label: "Default" },
 ];
 </script>

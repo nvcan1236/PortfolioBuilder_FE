@@ -1,13 +1,24 @@
 <template>
   <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
     <UFormField label="Full Name" name="fullName">
-      <UInput v-model="state.fullName" class="w-full" />
+      <UInput v-model="state.fullName" class="w-full" placeholder="John Doe" />
+    </UFormField>
+    <UFormField label="Username" name="username">
+      <UInput v-model="state.username" class="w-full" placeholder="john_doe" />
     </UFormField>
     <UFormField label="Email" name="email">
-      <UInput v-model="state.email" class="w-full" />
+      <UInput
+        v-model="state.email"
+        class="w-full"
+        placeholder="somebody@example.com"
+      />
     </UFormField>
     <UFormField label="Phone Number" name="phoneNumber">
-      <UInput v-model="state.phoneNumber" class="w-full" />
+      <UInput
+        v-model="state.phoneNumber"
+        class="w-full"
+        placeholder="xxxx-xxx-xxx"
+      />
     </UFormField>
     <UFormField label="Password" name="password">
       <div class="relative">
@@ -15,6 +26,7 @@
           v-model="state.password"
           :type="showPassword ? 'text' : 'password'"
           class="w-full"
+          placeholder="Enter your password"
         >
           <template #trailing>
             <UButton
@@ -33,6 +45,7 @@
           v-model="state.confirmPassword"
           :type="showPassword ? 'text' : 'password'"
           class="w-full"
+          placeholder="Enter your password again"
         >
           <template #trailing>
             <UButton
@@ -69,6 +82,7 @@ const schema = z
   .object({
     fullName: z.string().min(1, "Name is required"),
     email: z.string().email("Invalid email"),
+    username: z.string().min(1, "Username is required"),
     password: z.string().min(8, "Must be at least 8 characters"),
     phoneNumber: z.string().min(10, "Must be at least 10 characters"),
     confirmPassword: z.string().min(8, "Must be at least 8 characters"),
@@ -81,6 +95,7 @@ const schema = z
 const state = reactive<Partial<Schema>>({
   fullName: "",
   email: "",
+  username: "",
   password: "",
   phoneNumber: "",
   confirmPassword: "",

@@ -1,7 +1,11 @@
 <template>
   <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
     <UFormField label="Email" name="email">
-      <UInput v-model="state.email" class="w-full" />
+      <UInput
+        v-model="state.email"
+        class="w-full"
+        placeholder="somebody@example.com"
+      />
     </UFormField>
 
     <UFormField label="Password" name="password">
@@ -10,6 +14,7 @@
           v-model="state.password"
           :type="showPassword ? 'text' : 'password'"
           class="w-full"
+          placeholder="Enter your password"
         >
           <template #trailing>
             <UButton
@@ -24,7 +29,7 @@
 
     <div class="text-left"></div>
     <UButton type="submit" class="w-full justify-center" :loading="isPending">
-      Submit
+      Login
     </UButton>
   </UForm>
 </template>
@@ -43,8 +48,8 @@ type Schema = z.output<typeof schema>;
 const showPassword = ref(false);
 
 const state = reactive<Partial<Schema>>({
-  email: "string1@gmail.com",
-  password: "string1",
+  email: "",
+  password: "",
 });
 
 const toast = useToast();

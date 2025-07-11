@@ -2,6 +2,7 @@
 import { storeToRefs } from 'pinia';
 const authStore = useAuthStore();
 const { isAuthenticated } = storeToRefs(authStore);
+const { user } = storeToRefs(authStore);
 </script>
 
 <template>
@@ -95,7 +96,7 @@ const { isAuthenticated } = storeToRefs(authStore);
                 label: 'hidden lg:block',
               }"
             >
-              Canh Nguyen
+              {{ authStore.user?.fullName }}
             </UButton>
             <LogoutModal />
           </div>

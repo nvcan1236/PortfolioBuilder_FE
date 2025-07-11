@@ -1,4 +1,4 @@
-export type TemplateKey = 'classic' | 'modern' | 'minimal';
+export type TemplateKey = 'classic' | 'modern' | 'minimal' | 'default';
 
 type TemplateConfig = {
   key: TemplateKey;
@@ -73,6 +73,27 @@ export const templateConfigs: Record<TemplateKey, TemplateConfig> = {
       header: 'MinimalHeader',
       content: 'MinimalContent',
       footer: 'MinimalFooter'
+    },
+    props: {
+      header: {
+        title: 'My Portfolio'
+      },
+      content: {
+        title: 'My Portfolio'
+      },
+      footer: {
+        title: 'My Portfolio'
+      }
+    }
+  },
+  default: {
+    key: 'default',
+    name: 'Default Template',
+    description: 'A default layout',
+    components: {
+      header: 'DefaultHeader',
+      content: 'DefaultContent',
+      footer: 'DefaultFooter'
     },
     props: {
       header: {

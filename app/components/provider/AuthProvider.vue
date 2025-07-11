@@ -13,6 +13,7 @@ const { data } = useMeQuery();
 watchEffect(() => {
   if (data.value?.data.id) {
     authStore.loginDone();
+    authStore.setUser(data.value.data);
   }
 });
 </script>
